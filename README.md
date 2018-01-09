@@ -6,10 +6,10 @@ Release 1.0
 TODO
 Detect inventory full and run sell inventory script
 Daily script:
-  Upper dungeon
-  Stockade
-  Hero's inn
-  $ castle
+ -Upper dungeon
+ -Stockade
+ -Hero's inn
+ -$ castle
 Reusable scripts:
-  mail
-  Arena
+ -mail
+ -Arena
