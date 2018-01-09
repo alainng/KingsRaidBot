@@ -71,21 +71,22 @@ def get_cords():
     print(x,y)
 
 def start_repeat_fight():
-    repeat_counter=2
-    mousePos(Cord.prepare_battle)
-    leftClick()
-    time.sleep(.75)
-    mousePos(Cord.get_ready_for_battle)
-    leftClick()
-    time.sleep(.75)
-    mousePos(Cord.auto_repeat)
-    leftClick()
-    time.sleep(.75)
-    mousePos(Cord.auto_repeat_ok)
-    leftClick()
-    time.sleep(5)
-    #Repeat the following block
-    while (repeat_counter>0):
+    repeat_counter=10
+    while(repeat_counter>0):
+        mousePos(Cord.prepare_battle)
+        leftClick()
+        time.sleep(.75)
+        mousePos(Cord.get_ready_for_battle)
+        leftClick()
+        time.sleep(.75)
+        mousePos(Cord.auto_repeat)
+        leftClick()
+        time.sleep(.75)
+        mousePos(Cord.auto_repeat_ok)
+        leftClick()
+        time.sleep(5)
+        #Repeat the following block
+
         while (grab_insufficient_stamina()!=100182 and grab_insufficient_stamina()!=99937):
             print('Still have stamina')
             time.sleep(5)
@@ -93,6 +94,7 @@ def start_repeat_fight():
         mousePos(Cord.insufficient_stamina_ok)
         leftClick()
         time.sleep(1)
+        
         mousePos(Cord.middle_stamina_potion)
         leftClick()
         time.sleep(1)
@@ -102,24 +104,28 @@ def start_repeat_fight():
         mousePos(Cord.middle_stamina_potion_ok_yes)
         leftClick()
         time.sleep(1)
-        mousePos(Cord.middle_stamina_potion_ok_yes_repeat)
+        mousePos(Cord.middle_stamina_potion_ok_yes_x)
         leftClick()
         time.sleep(1)
-        mousePos(Cord.middle_stamina_potion_ok_yes_repeat_ok)
-        leftClick()
-        time.sleep(3)
-        #repeat ends
-        repeat_counter = repeat_counter-1
-        print('repeat counter left')
-        print(repeat_counter)
-    print('Done')
+        sell_all_post_fight()
+        repeat_counter=repeat_counter-1
+    print(repeat_counter)
+    
+    # mousePos(Cord.middle_stamina_potion_ok_yes_repeat)
+    # leftClick()
+    # time.sleep(1)
+    # mousePos(Cord.middle_stamina_potion_ok_yes_repeat_ok)
+    # leftClick()
+    # time.sleep(3)
+    #repeat ends
+
     
     
     
-def sell_all():
-    mousePos(Cord.inventory)
+def sell_all_post_fight():
+    mousePos(Cord.post_fight_inventory)
     leftClick()
-    time.sleep(.75)
+    time.sleep(15)
     mousePos(Cord.i_sell)
     leftClick()
     time.sleep(.75)
@@ -134,7 +140,7 @@ def sell_all():
     time.sleep(1.25)
     mousePos(Cord.back)
     leftClick()
-    time.sleep(0.75)
+    time.sleep(3)
 
 def collect_mail(): #untested
     mousePos(Cord.mail)

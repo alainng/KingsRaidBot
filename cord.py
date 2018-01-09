@@ -8,9 +8,12 @@ class Cord:
     middle_stamina_potion = (857,487)
     middle_stamina_potion_ok = (913,782)
     middle_stamina_potion_ok_yes = (1062,826)
+    middle_stamina_potion_ok_yes_x = (1317,298)
     middle_stamina_potion_ok_yes_repeat = (1118,630)
     middle_stamina_potion_ok_yes_repeat_ok = (905,747)
     back = (194,36)
+    
+    post_fight_inventory = (117, 323)
     inventory = (232,928) #(223, 212, 178)
     i_sell = (1530,890)
     i_grind = (1201,887)
