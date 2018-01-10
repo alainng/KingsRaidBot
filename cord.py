@@ -22,4 +22,4 @@ class Cord:
     i_sellgrind_all_confirmation_confirm = (1086,752)
     mail = (1516,47) #(224, 201, 152)
     m_claim_all = (1361, 841)
-    m_confirm = (0,0)
+    m_x = (1467,201)

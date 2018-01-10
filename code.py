@@ -5,6 +5,7 @@ import win32api, win32con
 from cord import Cord
 from PIL import ImageOps
 from numpy import *
+import sys
 
 # Globals
 # ------------------
@@ -29,8 +30,16 @@ def grab():
     print(a)
     return a
 
-def grab_end_repeat():
-    box = (926,114,928,135)
+def grab_mail_status(): #nomail 23543
+    box = (1525,55,1586,92)
+    im = ImageOps.grayscale(ImageGrab.grab(box))
+    a = array(im.getcolors())
+    a = a.sum()
+    print(a)
+    return a
+    
+def grab_session_expired(): #to be fixed
+    box = (483,240,1400,834)
     im = ImageOps.grayscale(ImageGrab.grab(box))
     a = array(im.getcolors())
     a = a.sum()
@@ -49,18 +58,7 @@ def leftClick():
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
     time.sleep(.1)
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)
-    print("Click.")          #completely optional. But nice for debugging purposes.
     
-def leftDown():
-    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
-    time.sleep(.1)
-    prin('left Down')
-         
-def leftUp():
-    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)
-    time.sleep(.1)
-    print('left release')
-
 def mousePos(cord):
     win32api.SetCursorPos((x_pad + cord[0], y_pad + cord[1]))
 
@@ -71,8 +69,12 @@ def get_cords():
     print(x,y)
 
 def start_repeat_fight():
-    repeat_counter=10
+    repeat_counter=150
     while(repeat_counter>0):
+        #if mail, get mail stuff
+        if(grab_mail_status()!=23543):
+            collect_mail()
+        #start fight sequence
         mousePos(Cord.prepare_battle)
         leftClick()
         time.sleep(.75)
@@ -85,19 +87,19 @@ def start_repeat_fight():
         mousePos(Cord.auto_repeat_ok)
         leftClick()
         time.sleep(5)
-        #Repeat the following block
-
+        #in fight
+        stamina_check_counter=0
         while (grab_insufficient_stamina()!=100182 and grab_insufficient_stamina()!=99937):
-            print('Still have stamina')
+            if(stamina_check_counter > 360):
+                sys.exit()
             time.sleep(5)
-        print('No more stamina')
+            stamina_check_counter = stamina_check_counter +1
         mousePos(Cord.insufficient_stamina_ok)
         leftClick()
-        time.sleep(1)
-        
-        mousePos(Cord.middle_stamina_potion)
+        time.sleep(2)
+        mousePos(Cord.middle_stamina_potion) #make sure that stamina recovery items > 1 run
         leftClick()
-        time.sleep(1)
+        time.sleep(2)
         mousePos(Cord.middle_stamina_potion_ok)
         leftClick()
         time.sleep(1)
@@ -111,16 +113,7 @@ def start_repeat_fight():
         repeat_counter=repeat_counter-1
     print(repeat_counter)
     
-    # mousePos(Cord.middle_stamina_potion_ok_yes_repeat)
-    # leftClick()
-    # time.sleep(1)
-    # mousePos(Cord.middle_stamina_potion_ok_yes_repeat_ok)
-    # leftClick()
-    # time.sleep(3)
-    #repeat ends
-
-    
-    
+  
     
 def sell_all_post_fight():
     mousePos(Cord.post_fight_inventory)
@@ -148,10 +141,14 @@ def collect_mail(): #untested
     time.sleep(2)
     mousePos(Cord.m_claim_all)
     leftClick()
-    time.sleep(2)
-    mousePos(Cord.m_confirm)
+    time.sleep(3)
+    mousePos(Cord.m_claim_all)
     leftClick()
-    time.sleep(2)
+    time.sleep(1)
+    mousePos(Cord.m_x)
+    leftClick()
+    time.sleep(1)
+    
 
     
 def main():
