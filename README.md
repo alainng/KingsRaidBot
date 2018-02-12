@@ -12,4 +12,5 @@ Daily script:
  -$ castle
 Reusable scripts:
  -mail
- -Arena
+ -Arena Repeat
+ -LOH
