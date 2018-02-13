@@ -216,21 +216,21 @@ def start_loh():
     while True:
         moveClickSleep(Cord.loh_ready_to_duel,0.75)
         moveClickSleep(Cord.loh_disconnect_warning,5)
-        startedPickBan = False
-        banToggle=True
+        started_pick_ban = False
+        ban_toggle=True
         while not grab_ready_to_duel():
             time.sleep(1)
                 
             if grab_pick_ban_left() and grab_pick_ban_right():
                 print("not in pickban")
-                if startedPickBan:
+                if started_pick_ban:
                     moveClickSleep(Cord.loh_exit,1)
             elif not grab_pick_ban_left():
                 print("opponent turn")
             else:
                 print("my turn")
-                startedPickBan = True
-                if banToggle:
+                started_pick_ban = True
+                if ban_toggle:
                     print("banning")
                     moveClickSleep(Cord.loh_wizard,0.21)
                     moveClickSleep(Cord.loh_wizard_nyx,0.21)
@@ -243,7 +243,7 @@ def start_loh():
                     moveClickSleep(Cord.loh_select,0.21)
                     moveClickSleep(Cord.loh_all,0.21)
 
-                    banToggle = not banToggle
+                    ban_toggle = not ban_toggle
                 else:
                     print("picking")
                     moveClickSleep(Cord.loh_epis,0.23)

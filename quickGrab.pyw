@@ -4,8 +4,7 @@ import time
 
 def screenGrab():
     im = ImageGrab.grab()
-    im.save(os.getcwd() + '\\full_snap__' + str(int(time.time())) +
-'.png', 'PNG')
+    im.save(os.getcwd() + '\\full_snap__' + str(int(time.time())) + '.png', 'PNG')
  
 def main():
     screenGrab()
