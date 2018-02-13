@@ -1,5 +1,4 @@
 from PIL import ImageGrab
-import os
 import time
 import win32api, win32con
 from cord import Cord
@@ -10,8 +9,8 @@ import sys
 # Globals
 # ------------------
  
-x_pad = 38
-y_pad = 29
+x_pad = 15#38
+y_pad = 15#29
 
 
 def screenGrab():
@@ -28,6 +27,50 @@ def grab():
     print(a)
     return a
 
+def grab2(w,x,y,z):
+    box = (w,x,y,z)
+    im = ImageOps.grayscale(ImageGrab.grab(box))
+    a = array(im.getcolors())
+    a = a.sum()
+    return a  
+    
+def grab_ready_to_duel(): #42525
+    box = (1442,945,1690,990)
+    im = ImageOps.grayscale(ImageGrab.grab(box))
+    a = array(im.getcolors())
+    a = a.sum()
+    #print("ready2duel")
+    #print(a)
+    if a==42623:
+        return True
+    else:
+        return False
+
+def grab_pick_ban_left(): #9347 neutral wait
+    box = (423,125,529,160)
+    im = ImageOps.grayscale(ImageGrab.grab(box))
+    a = array(im.getcolors())
+    a = a.sum()
+    #print("left")
+    #print(a)
+    if(a!=8660):
+        return True
+    else:
+        return False
+
+def grab_pick_ban_right(): #1873
+    box = (1360,125,1400,160)
+    im = ImageOps.grayscale(ImageGrab.grab(box))
+    a = array(im.getcolors())
+    a = a.sum()
+    #print("right")
+    #print(a)
+    if(a!=1828):
+        return True
+    else:
+        return False
+    
+    
 def grab_mail_status(): #nomail 23543
     box = (1525,55,1586,92)
     im = ImageOps.grayscale(ImageGrab.grab(box))
@@ -35,14 +78,7 @@ def grab_mail_status(): #nomail 23543
     a = a.sum()
     print(a)
     return a
-    
-def grab_session_expired(): #to be fixed
-    box = (483,240,1400,834)
-    im = ImageOps.grayscale(ImageGrab.grab(box))
-    a = array(im.getcolors())
-    a = a.sum()
-    print(a)
-    return a
+
     
 def grab_insufficient_stamina(): #99937
     box = (500,530,1100,650)
@@ -70,8 +106,9 @@ def get_cords(): #debug function
     x,y = win32api.GetCursorPos()
     x = x - x_pad
     y = y - y_pad
-    print(x,y)
+    print(x, y)
 
+    
 def start_repeat_fight():
     repeat_counter=150
     while(repeat_counter>0):
@@ -139,19 +176,97 @@ def sell_all_post_fight():
     moveClickSleep(Cord.i_sellgrind_all_confirmation,1)
     moveClickSleep(Cord.i_sellgrind_all_confirmation_confirm,1.25)
     moveClickSleep(Cord.back,3)
-   
+
+def sell_all():
+    moveClickSleep(Cord.post_fight_inventory,15)
+    moveClickSleep(Cord.i_sell,1)
+    moveClickSleep(Cord.i_sellgrind_all,1)
+    moveClickSleep(Cord.i_sellgrind_all_confirmation,1)
+    moveClickSleep(Cord.i_sellgrind_all_confirmation_confirm,1.25)
+    moveClickSleep(Cord.back,3)    
 
 def collect_mail():
     moveClickSleep(Cord.mail,3)
     moveClickSleep(Cord.m_claim_all,4)
     moveClickSleep(Cord.m_claim_all,2)
     moveClickSleep(Cord.m_x,1)
-    
+
+def get_number_of_bans_left():
+    leftleft=grab2(323,948,323+33,948+33) #1099 is empty
+    leftright=grab2(410,948,410+33,948+33)
+    result_left_bans = 0
+    if leftleft != 1099:
+        result_left_bans = result_left_bans+1
+    if leftright != 1099:
+        result_left_bans = result_left_bans+1
+    return result_left_bans
+
+def get_number_of_bans_right():
+    rightleft=grab2(1438,948,1438+33,948+33)
+    rightright=grab2(1525,948,1525+33,948+33)
+    result_right_bans = 0
+    if rightleft != 1099:
+        result_right_bans = result_right_bans+1
+    if rightright != 1099:
+        result_right_bans = result_right_bans+1
+    return result_right_bans
 
     
+def start_loh():
+    while True:
+        moveClickSleep(Cord.loh_ready_to_duel,0.75)
+        moveClickSleep(Cord.loh_disconnect_warning,5)
+        startedPickBan = False
+        banToggle=True
+        while not grab_ready_to_duel():
+            time.sleep(1)
+                
+            if grab_pick_ban_left() and grab_pick_ban_right():
+                print("not in pickban")
+                if startedPickBan:
+                    moveClickSleep(Cord.loh_exit,1)
+            elif not grab_pick_ban_left():
+                print("opponent turn")
+            else:
+                print("my turn")
+                startedPickBan = True
+                if banToggle:
+                    print("banning")
+                    moveClickSleep(Cord.loh_wizard,0.21)
+                    moveClickSleep(Cord.loh_wizard_nyx,0.21)
+                    moveClickSleep(Cord.loh_select,0.21)
+                    moveClickSleep(Cord.loh_wizard_artemia,0.21)
+                    moveClickSleep(Cord.loh_select,0.21)
+                    moveClickSleep(Cord.loh_wizard_aisha,0.21)
+                    moveClickSleep(Cord.loh_select,0.21)
+                    moveClickSleep(Cord.loh_wizard_cleo,0.21)
+                    moveClickSleep(Cord.loh_select,0.21)
+                    moveClickSleep(Cord.loh_all,0.21)
+
+                    banToggle = not banToggle
+                else:
+                    print("picking")
+                    moveClickSleep(Cord.loh_epis,0.23)
+                    moveClickSleep(Cord.loh_select,0.23)
+                    moveClickSleep(Cord.loh_jane,0.23)
+                    moveClickSleep(Cord.loh_select,0.23)
+                    moveClickSleep(Cord.loh_clause,0.23)
+                    moveClickSleep(Cord.loh_select,0.23)
+                    moveClickSleep(Cord.loh_gau,0.23)
+                    moveClickSleep(Cord.loh_select,0.23)
+                    moveClickSleep(Cord.loh_arch,0.23)
+                    moveClickSleep(Cord.loh_select,0.23)
+                    moveClickSleep(Cord.loh_roy,0.23)
+                    moveClickSleep(Cord.loh_select,0.23)
+                    
+                    moveClickSleep(Cord.loh_kaulah,0.23)
+                    moveClickSleep(Cord.loh_select,0.23)
+                    moveClickSleep(Cord.loh_frey,0.23)
+                    moveClickSleep(Cord.loh_select,0.23)
+
+
 def main():
-    start_repeat_fight()
-    #sell_all()
+    start_loh()
     pass
  
 if __name__ == '__main__':
