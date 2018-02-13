@@ -13,6 +13,8 @@ class Cord:
     middle_stamina_potion_ok_yes_repeat_ok = (905,747)
     back = (194,36)
     
+    middle_stamina_potion_x = (1369,292)
+    
     post_fight_inventory = (117, 323)
     inventory = (232,928) #(223, 212, 178)
     i_sell = (1530,890)
@@ -23,3 +25,33 @@ class Cord:
     mail = (1516,47) #(224, 201, 152)
     m_claim_all = (1361, 841)
     m_x = (1467,201)
+    
+    post_fight_exit = (1728,914)
+    
+    
+    
+    loh_ready_to_duel = (1550,970) #1442,945 1690,990
+    loh_disconnect_warning = (940,784) #895 758 984 800
+    
+    loh_epis = (870,520)
+    loh_arch = (1285,926)
+    loh_clause = (720,660)
+    loh_jane = (1320,822)
+    loh_kaulah = (720,520)
+    loh_gau = (1169,366)
+    
+    loh_kasel = (570,350)
+    loh_frey = (720,350)
+    loh_cleo = (870,350)
+    loh_roy = (1020,350)
+    
+    loh_all = (555,254)
+    loh_wizard = (1213,251)
+    loh_wizard_nyx = (552,502)
+    loh_wizard_artemia = (850,500)
+    loh_wizard_aisha = (1147,350)
+    loh_wizard_cleo = (550,355)
+    
+    
+    loh_select = (1166,997)
+    loh_exit = (1730,856)
